@@ -1,0 +1,90 @@
+import pandas as pd
+import numpy as np
+
+haert_disease = pd.read_csv("heart-disease.csv")
+
+# Use age, sex, cp, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal collumns to predict the target column
+# x - fetures matrix (age-thal columns)
+# y - lable matrix (target col)
+x = heart_disease.drop("target", axis = 1)
+y = heart_disease["target]
+
+# Need to classify wheither the patient has a heart disease or not
+from sklearn.ensemble import RandomForestClassifier
+clf = RandomForestClassifier(n_estimators = 100) #as default
+params = clf.get_params()
+
+#fid (80% training, 20% testing) and find patterns
+clf.fit(x_train, y_train)
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.2)
+
+y_preds = clf.predict(x_test)
+#print()
+y_preds
+y_test
+
+clf.score(x_test, y_test)
+# output = 1.0
+
+clf.score(x_test, y_test)
+#output = 0.819672131147541
+
+from sklearn.metrics import classification_report, confusion_matrix, accuracy score
+print(classification_report(y_test, y_preds))
+#output:              precision    recall  f1-score   support
+
+           0       0.70      0.86      0.78        22
+           1       0.91      0.79      0.85        39
+
+    accuracy                           0.82        61
+   macro avg       0.81      0.83      0.81        61
+weighted avg       0.84      0.82      0.82        61
+
+confusion_matrix(y_test, y_preds)
+#output: array([[19,  3],
+               [ 8, 31]])
+
+acurracy_score(y_test, y_preds)
+#output: 0.819672131147541
+
+# Model improvement
+np.random.seed(42)
+for i in range(10, 100, 10):
+  print(f"Training model with {i} estimators...")
+  clf = RandomForestClassifier(n_estimators = i).fit(x_train, y_train)
+  print(f"Model accuracy on test set: {clf.score(x_test, y_test) * 100:.2f}%")
+  print(" ")
+#output: Traing model with 10 estimators...
+Model accuracy on test set: 81.97%
+ 
+Traing model with 20 estimators...
+Model accuracy on test set: 80.33%
+ 
+Traing model with 30 estimators...
+Model accuracy on test set: 81.97%
+ 
+Traing model with 40 estimators...
+Model accuracy on test set: 80.33%
+ 
+Traing model with 50 estimators...
+Model accuracy on test set: 81.97%
+ 
+Traing model with 60 estimators...
+Model accuracy on test set: 80.33%
+ 
+Traing model with 70 estimators...
+Model accuracy on test set: 83.61%
+ 
+Traing model with 80 estimators...
+Model accuracy on test set: 81.97%
+ 
+Traing model with 90 estimators...
+Model accuracy on test set: 83.61%
+
+
+
+
+
+
+
